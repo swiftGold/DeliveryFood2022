@@ -1,0 +1,45 @@
+PODS:
+  - Alamofire (5.6.2)
+  - Core (0.1.0)
+  - Moya (15.0.0):
+    - Moya/Core (= 15.0.0)
+  - Moya/Core (15.0.0):
+    - Alamofire (~> 5.0)
+  - Networking (0.1.0):
+    - Core
+    - Moya
+  - Realm (10.28.5):
+    - Realm/Headers (= 10.28.5)
+  - Realm/Headers (10.28.5)
+  - RealmSwift (10.28.5):
+    - Realm (= 10.28.5)
+
+DEPENDENCIES:
+  - Core (from `DevPods/Core`)
+  - Networking (from `DevPods/Networking`)
+  - RealmSwift
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - Moya
+    - Realm
+    - RealmSwift
+
+EXTERNAL SOURCES:
+  Core:
+    :path: DevPods/Core
+  Networking:
+    :path: DevPods/Networking
+
+SPEC CHECKSUMS:
+  Alamofire: d368e1ff8a298e6dde360e35a3e68e6c610e7204
+  Core: e39f3a89bb561b0f5ed529309e9e3eae7a491303
+  Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
+  Networking: 79113d2cc50c4faf47be3ea1607159d3dcdbabd1
+  Realm: eb7f6a7a8395906822e6fab71eb8496d6d52b318
+  RealmSwift: 6b54904d4a236de143f3411a757641fd74e9cb3d
+
+PODFILE CHECKSUM: 8372acca3be99cbc35d18b2a8558cc7a2faf88f5
+
+COCOAPODS: 1.11.3
