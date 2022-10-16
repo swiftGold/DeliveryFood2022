@@ -91,7 +91,7 @@ private extension MenuItemCell {
     
     func setConstraints() {
         NSLayoutConstraint.activate([
-            imageForCell.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+            imageForCell.topAnchor.constraint(equalTo: topAnchor, constant: 26),
             imageForCell.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -8),
             imageForCell.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             imageForCell.widthAnchor.constraint(equalToConstant: 100),
@@ -99,7 +99,7 @@ private extension MenuItemCell {
         ])
         
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 16),
             titleLabel.leadingAnchor.constraint(equalTo: imageForCell.trailingAnchor, constant: 16),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
         ])

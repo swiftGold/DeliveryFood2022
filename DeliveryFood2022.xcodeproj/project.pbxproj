@@ -31,11 +31,11 @@
 		5480471728D73AA40062845B /* TitleLabel16.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5480471628D73AA40062845B /* TitleLabel16.swift */; };
 		5480471928D73D970062845B /* DescriptionLabel14.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5480471828D73D970062845B /* DescriptionLabel14.swift */; };
 		5480471B28D73E510062845B /* WhiteLabelRubikMedium14.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5480471A28D73E510062845B /* WhiteLabelRubikMedium14.swift */; };
+		5480471E28D9C0A50062845B /* SalesImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5480471D28D9C0A50062845B /* SalesImageCell.swift */; };
 		548B5F9428D35F6B0027236D /* MenuElementsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548B5F9328D35F6B0027236D /* MenuElementsModel.swift */; };
 		548B5F9728D470950027236D /* MenuItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548B5F9628D470950027236D /* MenuItemCell.swift */; };
 		548B5F9928D477300027236D /* Archive.otf in Resources */ = {isa = PBXBuildFile; fileRef = 548B5F9828D477300027236D /* Archive.otf */; };
 		548B5F9B28D4AD910027236D /* MenuItemsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548B5F9A28D4AD910027236D /* MenuItemsModel.swift */; };
-		54ACDB8228D21D5200392470 /* UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ACDB8128D21D5200392470 /* UIStackView.swift */; };
 		54ACDB8428D319BC00392470 /* Rubik-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 54ACDB8328D319BC00392470 /* Rubik-Medium.ttf */; };
 		54ACDB8628D319D100392470 /* Rubik-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 54ACDB8528D319D100392470 /* Rubik-Regular.ttf */; };
 		54ACDB8A28D319F000392470 /* Snowstorm Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 54ACDB8728D319EF00392470 /* Snowstorm Light.otf */; };
@@ -94,11 +94,11 @@
 		5480471628D73AA40062845B /* TitleLabel16.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleLabel16.swift; sourceTree = "<group>"; };
 		5480471828D73D970062845B /* DescriptionLabel14.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionLabel14.swift; sourceTree = "<group>"; };
 		5480471A28D73E510062845B /* WhiteLabelRubikMedium14.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhiteLabelRubikMedium14.swift; sourceTree = "<group>"; };
+		5480471D28D9C0A50062845B /* SalesImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalesImageCell.swift; sourceTree = "<group>"; };
 		548B5F9328D35F6B0027236D /* MenuElementsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuElementsModel.swift; sourceTree = "<group>"; };
 		548B5F9628D470950027236D /* MenuItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemCell.swift; sourceTree = "<group>"; };
 		548B5F9828D477300027236D /* Archive.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Archive.otf; sourceTree = "<group>"; };
 		548B5F9A28D4AD910027236D /* MenuItemsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemsModel.swift; sourceTree = "<group>"; };
-		54ACDB8128D21D5200392470 /* UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackView.swift; sourceTree = "<group>"; };
 		54ACDB8328D319BC00392470 /* Rubik-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rubik-Medium.ttf"; sourceTree = "<group>"; };
 		54ACDB8528D319D100392470 /* Rubik-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rubik-Regular.ttf"; sourceTree = "<group>"; };
 		54ACDB8728D319EF00392470 /* Snowstorm Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Snowstorm Light.otf"; sourceTree = "<group>"; };
@@ -281,6 +281,7 @@
 		5447EA2028CB3FD700B2F06D /* SalesCell */ = {
 			isa = PBXGroup;
 			children = (
+				5480471C28D9C0800062845B /* SalesImageCell */,
 				5447EA1E28CB397900B2F06D /* SalesCell.swift */,
 			);
 			path = SalesCell;
@@ -293,7 +294,6 @@
 				5447EA2428CB40A900B2F06D /* UiTableViewCell.swift */,
 				5447EA2628CB40D800B2F06D /* UITableView.swift */,
 				541CCC9528D1DA6400BC272E /* UIColor.swift */,
-				54ACDB8128D21D5200392470 /* UIStackView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -317,6 +317,14 @@
 				5480471A28D73E510062845B /* WhiteLabelRubikMedium14.swift */,
 			);
 			path = Classes;
+			sourceTree = "<group>";
+		};
+		5480471C28D9C0800062845B /* SalesImageCell */ = {
+			isa = PBXGroup;
+			children = (
+				5480471D28D9C0A50062845B /* SalesImageCell.swift */,
+			);
+			path = SalesImageCell;
 			sourceTree = "<group>";
 		};
 		548B5F9528D4707E0027236D /* MenuItemCell */ = {
@@ -596,6 +604,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5447E9DC28C61C5700B2F06D /* CatalogViewController.swift in Sources */,
+				5480471E28D9C0A50062845B /* SalesImageCell.swift in Sources */,
 				541CCC9628D1DA6400BC272E /* UIColor.swift in Sources */,
 				5447EA1F28CB397900B2F06D /* SalesCell.swift in Sources */,
 				54ACDB8F28D3347500392470 /* MenuElementsCell.swift in Sources */,
@@ -604,7 +613,6 @@
 				5447E9DA28C61C5700B2F06D /* SceneDelegate.swift in Sources */,
 				5447EA1828CA1ADD00B2F06D /* Row.swift in Sources */,
 				5447EA1A28CA1B2E00B2F06D /* SectionViewModel.swift in Sources */,
-				54ACDB8228D21D5200392470 /* UIStackView.swift in Sources */,
 				548B5F9428D35F6B0027236D /* MenuElementsModel.swift in Sources */,
 				5447EA1C28CA1C3D00B2F06D /* CatalogPresenter.swift in Sources */,
 				5480471B28D73E510062845B /* WhiteLabelRubikMedium14.swift in Sources */,

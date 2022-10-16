@@ -9,7 +9,7 @@ import UIKit
 
 final class DeliveryCell: UITableViewCell {
     
-    private let view: UIView = {
+    private let containerView: UIView = {
         let view = UIView()
         view.backgroundColor = .specialBackground
         view.layer.cornerRadius = 15
@@ -23,28 +23,6 @@ final class DeliveryCell: UITableViewCell {
         return view
     }()
     
-    //https://russianblogs.com/article/83031076614/ работа с сегмент контрол
-//    private lazy var segmentedControl: UISegmentedControl = {
-//        let segmentedControl = UISegmentedControl()
-//        segmentedControl.insertSegment(withTitle: "Доставка", at: 0, animated: false)
-//        segmentedControl.insertSegment(withTitle: "Самовывоз", at: 1, animated: false)
-//        segmentedControl.selectedSegmentIndex = 0
-//        segmentedControl.backgroundColor = .specialBlack
-//        segmentedControl.selectedSegmentTintColor = .specialWhite
-//        let font = UIFont(name: "Rubik-Medium", size: 14)
-//        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: font as Any,
-//                                                 NSAttributedString.Key.foregroundColor: UIColor.specialLightGray],
-//                                                for: .normal)
-//        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: font as Any,
-//                                                 NSAttributedString.Key.foregroundColor: UIColor.black],
-//                                                for: .selected)
-//        segmentedControl.addTarget(self, action: #selector(segmentChanged), for: .valueChanged)
-//        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
-//        return segmentedControl
-//    }()
-    
-    //https://ru.stackoverflow.com/questions/965433/swift-uisegmentedcontrol стэквью с кнопками
-    
     private lazy var deliveryButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = .specialWhite
@@ -55,36 +33,41 @@ final class DeliveryCell: UITableViewCell {
         button.imageEdgeInsets = UIEdgeInsets(top: 6,
                                               left: 0,
                                               bottom: 0,
-                                              right: 50)
+                                              right: 20)
         button.titleEdgeInsets = UIEdgeInsets(top: 2,
                                               left: 0,
                                               bottom: 0,
                                               right: 0)
         button.setImage(UIImage(named: "deliveryImage"), for: .normal)
         button.layer.cornerRadius = 15
-        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-
-    private lazy var takeToGoButton: UIButton = {
+    
+    private lazy var pickupButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Самовывоз", for: .normal)
         button.titleLabel?.font = UIFont(name: "Rubik-Medium", size: 14)
         button.tintColor = .specialLightGray
         button.addTarget(self, action: #selector(takeToGoButtonTapped), for: .touchUpInside)
-        button.imageEdgeInsets = UIEdgeInsets(top: 6,
-                                              left: 0,
+        button.imageEdgeInsets = UIEdgeInsets(top: 4,
+                                              left: 30,
                                               bottom: 0,
-                                              right: 50)
-
+                                              right: 0)
+        
         button.titleEdgeInsets = UIEdgeInsets(top: 2,
-                                              left: 0,
+                                              left: 50,
                                               bottom: 0,
                                               right: 0)
         button.setImage(UIImage(named: "takeToGoImage"), for: .normal)
         button.layer.cornerRadius = 15
-        button.translatesAutoresizingMaskIntoConstraints = false
         return button
+    }()
+    
+    private let topStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.spacing = 3
+        stackView.distribution = .fillEqually
+        return stackView
     }()
     
     private let adresLabel: UILabel = {
@@ -106,9 +89,11 @@ final class DeliveryCell: UITableViewCell {
         return button
     }()
     
-//    private var buttonsStackView = UIStackView()
-    private var stack12 = UIStackView()
-            
+    private let bottomStackView: UIStackView = {
+        let stackView = UIStackView()
+        return stackView
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -122,8 +107,8 @@ final class DeliveryCell: UITableViewCell {
     @objc
     private func deliveryButtonTapped() {
         print(#function)
-        takeToGoButton.backgroundColor = .clear
-        takeToGoButton.tintColor = .specialLightGray
+        pickupButton.backgroundColor = .clear
+        pickupButton.tintColor = .specialLightGray
         deliveryButton.backgroundColor = .specialWhite
         deliveryButton.tintColor = .carbon
     }
@@ -131,8 +116,8 @@ final class DeliveryCell: UITableViewCell {
     @objc
     private func takeToGoButtonTapped() {
         print(#function)
-        takeToGoButton.backgroundColor = .specialWhite
-        takeToGoButton.tintColor = .carbon
+        pickupButton.backgroundColor = .specialWhite
+        pickupButton.tintColor = .carbon
         deliveryButton.backgroundColor = .clear
         deliveryButton.tintColor = .specialLightGray
     }
@@ -141,15 +126,6 @@ final class DeliveryCell: UITableViewCell {
     private func changeButtonTapped() {
         print(#function)
     }
-    
-//    @objc
-//    private func segmentChanged() {
-//        if segmentedControl.selectedSegmentIndex == 0 {
-//            print("1")
-//        } else {
-//            print("2")
-//        }
-//    }
 }
 
 // MARK: - Private methods
@@ -158,99 +134,45 @@ private extension DeliveryCell {
     func setupCell() {
         backgroundColor = .carbon
         
-        
-                
         addSubviews()
         setConstraints()
-        
-        stack12 = UIStackView(arrangedSubviews: [deliveryButton, takeToGoButton])
-        stack12.axis = .horizontal
-        stack12.distribution = .fillEqually // Одинаковые по ширине
-        stack12.alignment = .fill // Сверху до низу
-        
-//        buttonsStackView = UIStackView(arrangedSubViews: [deliveryButton, takeToGoButton],
-//                                       axis: .horizontal,
-//                                       spacing: 3,
-//                                       distribution: .fillEqually)
     }
     
     func addSubviews() {
-        contentView.myAddSubView(view)
-        view.myAddSubView(chooseView)
-//        view.addSubview(buttonsStackView)
-        view.myAddSubView(adresLabel)
-        view.myAddSubView(changeButton)
-        chooseView.myAddSubView(stack12)
+        topStackView.addArrangedSubview(deliveryButton)
+        topStackView.addArrangedSubview(pickupButton)
         
-//        view.addSubview(segmentedControl)
-//        view.myAddSubView(buttonsStackView)
-//        view.addSubview(buttonsStackView)
+        bottomStackView.addArrangedSubview(adresLabel)
+        bottomStackView.addArrangedSubview(changeButton)
         
-//        view.myAddSubView(deliveryButton)
-//        view.myAddSubView(takeToGoButton)
+        containerView.myAddSubView(chooseView)
+        containerView.myAddSubView(topStackView)
+        containerView.myAddSubView(bottomStackView)
+        
+        contentView.myAddSubView(containerView)
     }
     
     func setConstraints() {
         NSLayoutConstraint.activate([
-            view.topAnchor.constraint(equalTo: topAnchor, constant: 8),
-            view.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
-            view.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            view.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            view.heightAnchor.constraint(equalToConstant: 106)
-        ])
-        
-//        NSLayoutConstraint.activate([
-//            segmentedControl.topAnchor.constraint(equalTo: view.topAnchor, constant: 16),
-//            segmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-//            segmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-//            segmentedControl.heightAnchor.constraint(equalToConstant: 41)
-//        ])
-        
-        NSLayoutConstraint.activate([
-            chooseView.topAnchor.constraint(equalTo: view.topAnchor, constant: 16),
-            chooseView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            chooseView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            chooseView.heightAnchor.constraint(equalToConstant: 41)
-        ])
-        
-        NSLayoutConstraint.activate([
-            stack12.topAnchor.constraint(equalTo: chooseView.topAnchor, constant: 4),
-            stack12.trailingAnchor.constraint(equalTo: chooseView.trailingAnchor, constant: -4),
-//            stack12.bottomAnchor.constraint(equalTo: chooseView.bottomAnchor, constant: -4),
-            stack12.leadingAnchor.constraint(equalTo: chooseView.leadingAnchor, constant: 4)
-        ])
-        
-//        NSLayoutConstraint.activate([
-//            buttonsStackView.topAnchor.constraint(equalTo: chooseView.topAnchor, constant: 4),
-//            buttonsStackView.trailingAnchor.constraint(equalTo: chooseView.trailingAnchor, constant: -4),
-//            buttonsStackView.bottomAnchor.constraint(equalTo: chooseView.bottomAnchor, constant: -4),
-//            buttonsStackView.leadingAnchor.constraint(equalTo: chooseView.leadingAnchor, constant: 4)
-//        ])
-        
-//        NSLayoutConstraint.activate([
-//            deliveryButton.topAnchor.constraint(equalTo: chooseView.topAnchor, constant: 4),
-//            deliveryButton.trailingAnchor.constraint(lessThanOrEqualTo: takeToGoButton.leadingAnchor, constant: -4),
-//            deliveryButton.bottomAnchor.constraint(equalTo: chooseView.bottomAnchor, constant: -4),
-//            deliveryButton.leadingAnchor.constraint(equalTo: chooseView.leadingAnchor, constant: 4),
-//            deliveryButton.widthAnchor.constraint(equalToConstant: CGFloat((chooseView.frame.width / 2) - 6))
-//        ])
-//
-//        NSLayoutConstraint.activate([
-//            takeToGoButton.topAnchor.constraint(equalTo: chooseView.topAnchor, constant: 4),
-//            takeToGoButton.trailingAnchor.constraint(equalTo: chooseView.trailingAnchor, constant: -4),
-//            takeToGoButton.bottomAnchor.constraint(equalTo: chooseView.bottomAnchor, constant: -4),
-//            takeToGoButton.leadingAnchor.constraint(equalTo: deliveryButton.trailingAnchor, constant: 4),
-//            takeToGoButton.widthAnchor.constraint(equalToConstant: CGFloat((chooseView.frame.width / 2) - 6))
-//        ])
-        
-        NSLayoutConstraint.activate([
-            adresLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16),
-            adresLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16)
-        ])
-        
-        NSLayoutConstraint.activate([
-            changeButton.centerYAnchor.constraint(equalTo: adresLabel.centerYAnchor),
-            changeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
+            containerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0),
+            containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            
+            chooseView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 16),
+            chooseView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
+            chooseView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            chooseView.heightAnchor.constraint(equalToConstant: 41),
+            
+            topStackView.topAnchor.constraint(equalTo: chooseView.topAnchor, constant: 4),
+            topStackView.trailingAnchor.constraint(equalTo: chooseView.trailingAnchor, constant: -4),
+            topStackView.bottomAnchor.constraint(equalTo: chooseView.bottomAnchor, constant: -4),
+            topStackView.leadingAnchor.constraint(equalTo: chooseView.leadingAnchor, constant: 4),
+            
+            bottomStackView.topAnchor.constraint(equalTo: chooseView.bottomAnchor, constant: 16),
+            bottomStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
+            bottomStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            bottomStackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -16)
         ])
     }
 }

@@ -22,6 +22,7 @@ class CatalogViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
+        tableView.backgroundColor = .clear
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(SalesCell.self, forCellReuseIdentifier: "SalesCell")
         tableView.register(DeliveryCell.self, forCellReuseIdentifier: "DeliveryCell")
@@ -30,24 +31,39 @@ class CatalogViewController: UIViewController {
         return tableView
     }()
     
-    private let menuItemsArray = [
-        MenuItemsModel(nameLabelText: "мраморная говядина",
-                       descriptionLabelText: "Мраморная говядина, лук, молотый перец и соль, 165гр.",
-                       costLabelText: "90 руб."),
-        MenuItemsModel(nameLabelText: "курица по-азиатски",
-                       descriptionLabelText: "Куриное филе, сладкий соус чили, 135гр.",
-                       costLabelText: "90 руб."),
-        MenuItemsModel(nameLabelText: "моцарелла",
-                       descriptionLabelText: "Сыр моцарелла, 125гр.",
-                       costLabelText: "90 руб."),
-    ]
-    
     private var sectionViewModel: [SectionViewModel] = [
-        SectionViewModel(type: .sale, rows: [.sale(viewModel: SaleViewModel())]),
-        SectionViewModel(type: .delivery, rows: [.delivery(viewModel: DeliveryViewModel())]),
-        SectionViewModel(type: .menuElement, rows: [.menuElement(viewModel: MenuElementModel())]),
-        SectionViewModel(type: .menuItem, rows: [.menuItem(viewModel: MenuItemsModel(nameLabelText: "", descriptionLabelText: "", costLabelText: ""))]),
-        SectionViewModel(type: .menuItem, rows: [.menuItem(viewModel: MenuItemsModel(nameLabelText: "", descriptionLabelText: "", costLabelText: ""))])
+        SectionViewModel(
+            type: .sale,
+            rows: [.sale(viewModel: SaleViewModel())
+                  ]
+        ),
+        SectionViewModel(
+            type: .delivery,
+            rows: [.delivery(viewModel: DeliveryViewModel())
+                  ]
+        ),
+        SectionViewModel(
+            type: .menuElement,
+            rows: [.menuElement(viewModel: MenuElementModel())
+                  ]
+        ),
+        SectionViewModel(
+            type: .menuItem,
+            rows: [.menuItem(viewModel:
+                                MenuItemsModel(
+                                    nameLabelText: "мраморная говядина",
+                                    descriptionLabelText: "Мраморная говядина, лук, молотый перец и соль, 165гр.",
+                                    costLabelText: "90 руб.")),
+                   .menuItem(viewModel:
+                                MenuItemsModel(nameLabelText: "курица по-азиатски",
+                                                       descriptionLabelText: "Куриное филе, сладкий соус чили, 135гр.",
+                                                       costLabelText: "90 руб.")),
+                   .menuItem(viewModel:
+                                MenuItemsModel(nameLabelText: "моцарелла",
+                                                       descriptionLabelText: "Сыр моцарелла, 125гр.",
+                                                       costLabelText: "90 руб.")),
+                  ]
+        )
     ]
     
     override func viewDidLoad() {
@@ -65,9 +81,9 @@ extension CatalogViewController: CatalogViewControllerProtocol {
 
 //MARK: - UITableViewDelegate Impl
 extension CatalogViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return CGFloat(122)
-    }
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return CGFloat(122)
+//    }
 }
 
 //MARK: - UITableViewDataSource Impl
@@ -88,29 +104,32 @@ extension CatalogViewController: UITableViewDataSource {
         let section = indexPath.section
         let rowType = sectionViewModel[section].rows[row]
         switch rowType {
-        case .sale(viewModel: let viewModel):
+        case .sale(let viewModel):
             
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "SalesCell", for: indexPath) as? SalesCell else { return UITableViewCell()
             }
+            cell.backgroundColor = .clear
             return cell
             
-        case .delivery(viewModel: let viewModel):
+        case .delivery(let viewModel):
         
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "DeliveryCell", for: indexPath) as? DeliveryCell else { return UITableViewCell()
             }
+            cell.backgroundColor = .clear
             return cell
             
-        case .menuElement(viewModel: let viewModel):
+        case .menuElement(let viewModel):
+            
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "MenuElementsCell", for: indexPath) as? MenuElementsCell else { return UITableViewCell()
             }
+            cell.backgroundColor = .clear
             return cell
             
-        case .menuItem(viewModel: let viewModel):
+        case .menuItem(let viewModel):
+           
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "MenuItemCell", for: indexPath) as? MenuItemCell else { return UITableViewCell()
             }
-            
-            let viewModel = self.menuItemsArray[indexPath.item]
-                                    
+            cell.backgroundColor = .clear
             cell.cellConfig(viewModel)
             return cell
         }

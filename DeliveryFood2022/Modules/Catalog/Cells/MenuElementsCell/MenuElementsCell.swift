@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+ 
 final class MenuElementsCell: UITableViewCell {
     
     private let collectionView: UICollectionView = {
@@ -14,29 +14,26 @@ final class MenuElementsCell: UITableViewCell {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         
-        layout.itemSize = CGSize(width: 150, height: 70)
-        layout.minimumLineSpacing = 0
+        layout.itemSize = CGSize(width: 84, height: 33)
+        layout.minimumLineSpacing = 16
         layout.minimumInteritemSpacing = 0
         layout.scrollDirection = .horizontal
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        layout.sectionInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
         
         collectionView.contentInsetAdjustmentBehavior = .always
-        collectionView.backgroundColor = .carbon
+        collectionView.backgroundColor = .clear
         collectionView.bounces = false
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.register(MenuLabelCell.self, forCellWithReuseIdentifier: "MenuLabelCell")
         
         return collectionView
     }()
-    
-//    private let menuElementsArray: [String] = ["Чебуреки", "Завтраки", "ЧебурекМИ", "Добавки"]
-    
+        
     private var viewModel: MenuModel?
     
-    private let menuElementsArray =
-    [
-        MenuElementsModel(text: "Чебуреки", isSelected: true),
-        MenuElementsModel(text: "Завтраки", isSelected: false),
+    private var menuElementsArray = [
+        MenuElementsModel(text: "Чебуреки", isSelected: false),
+        MenuElementsModel(text: "Завтраки", isSelected: true),
         MenuElementsModel(text: "ЧебурекМИ", isSelected: false),
         MenuElementsModel(text: "Добавки", isSelected: false),
     ]
@@ -63,11 +60,7 @@ extension MenuElementsCell: UICollectionViewDataSource {
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MenuLabelCell", for: indexPath) as? MenuLabelCell else { return UICollectionViewCell()
         }
-        
-//        guard let viewModel = self.viewModel?.elements[indexPath.item] else { return UICollectionViewCell()
-//        }
-//        cell.cellConfig(viewModel)
-        
+
         cell.cellConfig(menuElementsArray[indexPath.item])
                                 
         return cell
@@ -100,10 +93,11 @@ private extension MenuElementsCell {
     
     func setConstraints() {
         NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: topAnchor, constant: 0),
+            collectionView.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+            collectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
             collectionView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0),
             collectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
-            collectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0)
+            collectionView.heightAnchor.constraint(equalToConstant: 49)
         ])
     }
 }

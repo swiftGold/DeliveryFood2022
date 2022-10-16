@@ -13,6 +13,8 @@ class MenuLabelCell: UICollectionViewCell {
         let label = WhiteLabelRubikMedium14()
         label.text = ""
         label.textAlignment = .center
+        label.layer.cornerRadius = 16
+        label.clipsToBounds = true
         return label
     }()
     
@@ -64,15 +66,15 @@ private extension MenuLabelCell {
     }
     
     func addSubviews() {
-        myAddSubView(menuLabel)
+        contentView.myAddSubView(menuLabel)
     }
     
     func setConstraints() {
         NSLayoutConstraint.activate([
-            menuLabel.topAnchor.constraint(equalTo: topAnchor, constant: 0),
-            menuLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0),
-            menuLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
-            menuLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0)
+            menuLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
+            menuLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            menuLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            menuLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
         ])
     }
 }
