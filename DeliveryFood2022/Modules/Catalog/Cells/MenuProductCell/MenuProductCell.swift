@@ -1,5 +1,5 @@
 //
-//  MenuItemCell.swift
+//  MenuProductCell.swift
 //  DeliveryFood2022
 //
 //  Created by Сергей Золотухин on 16.09.2022.
@@ -7,11 +7,11 @@
 
 import UIKit
 
-final class MenuItemCell: UITableViewCell {
+final class MenuProductCell: UITableViewCell {
     
     private let imageForCell: UIImageView = {
         let imageView = UIImageView()
-        var photoImage = UIImage(named: "food")
+        var photoImage = UIImage(asset: Asset.Assets.food)
         imageView.clipsToBounds = true
         imageView.image = photoImage
         return imageView
@@ -40,14 +40,13 @@ final class MenuItemCell: UITableViewCell {
     private lazy var addProductButton: UIButton = {
         let button = UIButton(type: .system)
         button.layer.cornerRadius = 10
-        button.setBackgroundImage(UIImage(named: "addtocart.png"), for: .normal)
+        button.setBackgroundImage(UIImage(asset: Asset.Assets.addtocart), for: .normal)
         button.addTarget(self, action: #selector(addProductButtonTapped), for: .touchUpInside)
         return button
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
         setupCell()
     }
 
@@ -60,8 +59,8 @@ final class MenuItemCell: UITableViewCell {
     }
 }
 
-extension MenuItemCell {
-    func cellConfig(_ viewModel: MenuItemsModel) {
+extension MenuProductCell {
+    func cellConfig(_ viewModel: MenuProductsModel) {
         titleLabel.text = viewModel.nameLabelText
         descriptionLabel.text = viewModel.descriptionLabelText
         costLabel.text = viewModel.costLabelText
@@ -70,17 +69,15 @@ extension MenuItemCell {
 
 // MARK: - Private methods
 
-private extension MenuItemCell {
+private extension MenuProductCell {
     func setupCell() {
         backgroundColor = .carbon
         selectionStyle = .none
-
         addSubviews()
         setConstraints()
     }
     
     func addSubviews() {
-        
         addSubview(contentView)
         myAddSubView(imageForCell)
         myAddSubView(titleLabel)

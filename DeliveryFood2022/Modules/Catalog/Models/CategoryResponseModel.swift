@@ -1,15 +1,15 @@
 //
-//  MenuElementsModel.swift
+//  MenuCategoriesModel.swift
 //  DeliveryFood2022
 //
 //  Created by Сергей Золотухин on 15.09.2022.
 //
 
-struct MenuModel {
-    let elements: [MenuElementsModel]
+struct CategoryResponseModel {
+    let categories: [MenuCategoriesModel]
 }
 
-struct MenuElementsModel {
+struct MenuCategoriesModel {
     var text: String
     var isSelected: Bool
 }
