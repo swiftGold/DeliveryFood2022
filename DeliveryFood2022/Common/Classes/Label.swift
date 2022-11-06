@@ -16,13 +16,11 @@ class Label: UILabel {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         setupLabel()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        
         setupLabel()
     }
 }
@@ -30,7 +28,6 @@ class Label: UILabel {
 // MARK: - Private methods
 
 private extension Label {
-    
     func setupLabel() {
         font = textLabelFont
         textColor = textLabelColor

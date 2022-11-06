@@ -19,6 +19,7 @@ end
 def common_pods
   use_frameworks!
   pod 'RealmSwift'
+  pod 'SwiftGen'
 end
 
 target 'DeliveryFood2022' do

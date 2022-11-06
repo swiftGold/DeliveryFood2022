@@ -8,7 +8,6 @@
 import UIKit
 
 class DescriptionLabel14: Label {
-    
     override var textLabelColor: UIColor? {
         return UIColor.specialLightGray
     }

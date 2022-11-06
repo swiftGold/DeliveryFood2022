@@ -8,7 +8,6 @@
 import UIKit
 
 class WhiteLabelRubikMedium14: Label {
-    
     override var textLabelColor: UIColor? {
         return UIColor.specialWhite
     }

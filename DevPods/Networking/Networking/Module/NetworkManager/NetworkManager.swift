@@ -6,20 +6,22 @@
 //
 
 import Foundation
+import Core
 
-protocol NetworkManagerProtocol {
-    
-    func request(_ urlString: String, completion: @escaping(Result<Data, Error>) -> Void)
+public protocol NetworkManagerProtocol {
+    func request<T: Decodable>(urlString: String, completion: @escaping (Result<T, Error>) -> Void)
 }
 
-final class NetworkManager {
-    
+public final class NetworkManager {
+    private let jsonService: JSONDecoderManagerProtocol
+    public init(jsonService: JSONDecoderManagerProtocol) {
+        self.jsonService = jsonService
+    }
 }
 
 extension NetworkManager: NetworkManagerProtocol {
-    
-    func request(_ urlString: String, completion: @escaping(Result<Data, Error>) -> Void) {
-        
+
+    public func request<T: Decodable>(urlString: String, completion: @escaping (Result<T, Error>) -> Void) {
         let session = URLSession.shared
         let request = URLRequest(url: URL(string: urlString)!)
         let task = session.dataTask(with: request) { data, response, error in
@@ -29,7 +31,7 @@ extension NetworkManager: NetworkManagerProtocol {
                 completion(.failure(myError))
                 return
             }
-            completion(.success(data))
+            self.jsonService.decode(data, completion: completion)
         }
         task.resume()
     }

@@ -1,5 +1,5 @@
 //
-//  SalesCell.swift
+//  SalesTableViewCell.swift
 //  DeliveryFood2022
 //
 //  Created by Сергей Золотухин on 09.09.2022.
@@ -7,32 +7,34 @@
 
 import UIKit
 
-final class SalesCell: UITableViewCell {
+final class SalesTableViewCell: UITableViewCell {
     
     private let collectionView: UICollectionView = {
-
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        
         layout.itemSize = CGSize(width: 310, height: 106)
         layout.minimumLineSpacing = 16
         layout.minimumInteritemSpacing = 0
         layout.scrollDirection = .horizontal
         layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
-        
         collectionView.contentInsetAdjustmentBehavior = .always
         collectionView.backgroundColor = .clear
         collectionView.bounces = false
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.register(SalesImageCell.self, forCellWithReuseIdentifier: "SalesImageCell")
-        
+        collectionView.register(SaleCollectionViewCell.self, forCellWithReuseIdentifier: "SalesImageCell")        
         return collectionView
     }()
+    
+    private var sales: [SaleCellViewModel] = []
             
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
         setupCell()
+    }
+    
+    func configureCell(with viewModel: SalesCellViewModel) {
+        sales = viewModel.sales
+        collectionView.reloadData()
     }
     
     required init?(coder: NSCoder) {
@@ -42,43 +44,32 @@ final class SalesCell: UITableViewCell {
 
 // MARK: - UICollectionViewDataSource Impl
 
-extension SalesCell: UICollectionViewDataSource {
+extension SalesTableViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return sales.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SalesImageCell", for: indexPath) as? SalesImageCell else { fatalError("")
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SalesImageCell", for: indexPath) as? SaleCollectionViewCell else { fatalError("")
         }
+        let viewModel = sales[indexPath.item]
+        cell.configureCell(with: viewModel)
         return cell
     }
 }
 
 // MARK: - UICollectionViewDelegate Impl
 
-extension SalesCell: UICollectionViewDelegate {
-
+extension SalesTableViewCell: UICollectionViewDelegate {
 }
-
-// MARK: - UICollectionViewDelegateFlowLayout Impl
-
-//extension SalesCell: UICollectionViewDelegateFlowLayout {
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        return CGSize(
-//            width: 310,
-//            height: 106
-//        )
-//    }
-//}
 
 // MARK: - Private methods
 
-private extension SalesCell {
+private extension SalesTableViewCell {
     func setupCell() {
-
+        backgroundColor = .clear
         addSubviews()
         setConstraints()
-        
         collectionView.delegate = self
         collectionView.dataSource = self
     }

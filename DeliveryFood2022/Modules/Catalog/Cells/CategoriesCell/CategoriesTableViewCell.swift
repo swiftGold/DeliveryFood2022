@@ -1,5 +1,5 @@
 //
-//  MenuCategoryCell.swift
+//  CategoriesTableViewCell.swift
 //  DeliveryFood2022
 //
 //  Created by Сергей Золотухин on 15.09.2022.
@@ -7,7 +7,7 @@
 
 import UIKit
  
-final class MenuCategoryCell: UITableViewCell {
+final class CategoriesTableViewCell: UITableViewCell {
     
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -21,18 +21,11 @@ final class MenuCategoryCell: UITableViewCell {
         collectionView.backgroundColor = .clear
         collectionView.bounces = false
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.register(MenuLabelCell.self, forCellWithReuseIdentifier: "MenuLabelCell")
+        collectionView.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: "CategoryCollectionViewCell")
         return collectionView
     }()
-        
-    private var viewModel: MenuModel?
     
-    private var menuCategoriesModel = [
-        MenuCategoriesModel(text: "Чебуреки", isSelected: false),
-        MenuCategoriesModel(text: "Завтраки", isSelected: true),
-        MenuCategoriesModel(text: "ЧебурекМИ", isSelected: false),
-        MenuCategoriesModel(text: "Добавки", isSelected: false),
-    ]
+    private var categories: [CategoryCellViewModel] = []
             
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -42,33 +35,38 @@ final class MenuCategoryCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func configureCell(with viewModel: CategoriesCellViewModel) {
+        categories = viewModel.categories
+        collectionView.reloadData()
+    }
 }
 
 // MARK: - UICollectionViewDataSource Impl
 
-extension MenuCategoryCell: UICollectionViewDataSource {
+extension CategoriesTableViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return menuCategoriesModel.count
+        return categories.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MenuLabelCell", for: indexPath) as? MenuLabelCell else { return UICollectionViewCell()
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryCollectionViewCell", for: indexPath) as? CategoryCollectionViewCell else { return UICollectionViewCell()
         }
-        cell.cellConfig(menuCategoriesModel[indexPath.item])
+        cell.configureCell(with: categories[indexPath.item])
         return cell
     }
 }
 
 // MARK: - UICollectionViewDelegate Impl
 
-extension MenuCategoryCell: UICollectionViewDelegate {
+extension CategoriesTableViewCell: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     }
 }
 
 // MARK: - Private methods
 
-private extension MenuCategoryCell {
+private extension CategoriesTableViewCell {
     func setupCell() {
         backgroundColor = .clear
         addSubviews()

@@ -1,5 +1,5 @@
 //
-//  MenuProductCell.swift
+//  ProductTableViewCell.swift
 //  DeliveryFood2022
 //
 //  Created by Сергей Золотухин on 16.09.2022.
@@ -7,9 +7,9 @@
 
 import UIKit
 
-final class MenuProductCell: UITableViewCell {
+final class ProductTableViewCell: UITableViewCell {
     
-    private let imageForCell: UIImageView = {
+    private let productImageView: UIImageView = {
         let imageView = UIImageView()
         var photoImage = UIImage(asset: Asset.Assets.food)
         imageView.clipsToBounds = true
@@ -59,17 +59,28 @@ final class MenuProductCell: UITableViewCell {
     }
 }
 
-extension MenuProductCell {
-    func cellConfig(_ viewModel: MenuProductsModel) {
-        titleLabel.text = viewModel.nameLabelText
-        descriptionLabel.text = viewModel.descriptionLabelText
-        costLabel.text = viewModel.costLabelText
+extension ProductTableViewCell {
+    func configureCell(with viewModel: ProductCellViewModel) {
+        titleLabel.text = viewModel.title
+        descriptionLabel.text = viewModel.description
+        costLabel.text = String(viewModel.price)
+        loadImageFromUrl(imageURL: viewModel.imageUrl, imageView: productImageView)
     }
 }
 
 // MARK: - Private methods
 
-private extension MenuProductCell {
+private extension ProductTableViewCell {
+    func loadImageFromUrl(imageURL: String, imageView: UIImageView) {
+        if let url = URL(string: imageURL) {
+            do {
+                let data = try Data(contentsOf: url)
+                self.imageView?.image = UIImage(data: data)
+            } catch {
+                print("Error = ", error.localizedDescription)}
+        }
+    }
+
     func setupCell() {
         backgroundColor = .carbon
         selectionStyle = .none
@@ -79,7 +90,7 @@ private extension MenuProductCell {
     
     func addSubviews() {
         addSubview(contentView)
-        myAddSubView(imageForCell)
+        myAddSubView(productImageView)
         myAddSubView(titleLabel)
         myAddSubView(descriptionLabel)
         myAddSubView(costLabel)
@@ -88,22 +99,22 @@ private extension MenuProductCell {
     
     func setConstraints() {
         NSLayoutConstraint.activate([
-            imageForCell.topAnchor.constraint(equalTo: topAnchor, constant: 26),
-            imageForCell.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -8),
-            imageForCell.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            imageForCell.widthAnchor.constraint(equalToConstant: 100),
-            imageForCell.heightAnchor.constraint(equalToConstant: 100)
+            productImageView.topAnchor.constraint(equalTo: topAnchor, constant: 26),
+            productImageView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -8),
+            productImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            productImageView.widthAnchor.constraint(equalToConstant: 100),
+            productImageView.heightAnchor.constraint(equalToConstant: 100)
         ])
         
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 16),
-            titleLabel.leadingAnchor.constraint(equalTo: imageForCell.trailingAnchor, constant: 16),
+            titleLabel.leadingAnchor.constraint(equalTo: productImageView.trailingAnchor, constant: 16),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
         ])
         
         NSLayoutConstraint.activate([
             descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
-            descriptionLabel.leadingAnchor.constraint(equalTo: imageForCell.trailingAnchor, constant: 16),
+            descriptionLabel.leadingAnchor.constraint(equalTo: productImageView.trailingAnchor, constant: 16),
             descriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
         ])
         
@@ -116,7 +127,7 @@ private extension MenuProductCell {
         ])
         
         NSLayoutConstraint.activate([
-            costLabel.leadingAnchor.constraint(equalTo: imageForCell.trailingAnchor, constant: 16),
+            costLabel.leadingAnchor.constraint(equalTo: productImageView.trailingAnchor, constant: 16),
             costLabel.centerYAnchor.constraint(equalTo: addProductButton.centerYAnchor)
         ])
     }

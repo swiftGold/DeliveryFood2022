@@ -7,14 +7,12 @@
 
 import UIKit
 
-//#colorLiteral()
-
 extension UIColor {
-    static let specialWhite = UIColor(red: 244/255, green: 244/255, blue: 244/255, alpha: 1)
-    static let specialGray = UIColor(red: 64/255, green: 64/255, blue: 64/255, alpha: 1)
-    static let specialBackground = UIColor(red: 56/255, green: 56/255, blue: 56/255, alpha: 1)
-    static let carbon = UIColor(red: 51/255, green: 51/255, blue: 51/255, alpha: 1)
-    static let specialBlack = UIColor(red: 51/255, green: 51/255, blue: 51/255, alpha: 0.6)
-    static let specialLightGray = UIColor(red: 130/255, green: 130/255, blue: 130/255, alpha: 1)
-    static let signalYellow = UIColor(red: 241/255, green: 180/255, blue: 11/255, alpha: 1)
+    static let specialWhite = UIColor(asset: Asset.Colors.specialWhite)
+    static let specialGray = UIColor(asset: Asset.Colors.specialGray)
+    static let specialBackground = UIColor(asset: Asset.Colors.specialBackground)
+    static let carbon = UIColor(asset: Asset.Colors.carbon)
+    static let specialBlack = UIColor(asset: Asset.Colors.specialBlack)
+    static let specialLightGray = UIColor(asset: Asset.Colors.specialLightGray)
+    static let signalYellow = UIColor(asset: Asset.Colors.signalYellow)
 }

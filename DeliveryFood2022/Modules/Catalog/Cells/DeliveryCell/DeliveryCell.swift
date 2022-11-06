@@ -7,8 +7,11 @@
 
 import UIKit
 
+protocol DeliveryCellDelegate: AnyObject {
+    func didTapChangeButton()
+}
+
 final class DeliveryCell: UITableViewCell {
-    
     private let containerView: UIView = {
         let view = UIView()
         view.backgroundColor = .specialBackground
@@ -27,7 +30,7 @@ final class DeliveryCell: UITableViewCell {
         let button = UIButton(type: .system)
         button.backgroundColor = .specialWhite
         button.setTitle("Доставка", for: .normal)
-        button.titleLabel?.font = UIFont(name: "Rubik-Medium", size: 14)
+        button.titleLabel?.font = UIFont(font: Fonts.Rubik.medium, size: 14)
         button.tintColor = .carbon
         button.addTarget(self, action: #selector(deliveryButtonTapped), for: .touchUpInside)
         button.imageEdgeInsets = UIEdgeInsets(top: 6,
@@ -38,7 +41,7 @@ final class DeliveryCell: UITableViewCell {
                                               left: 0,
                                               bottom: 0,
                                               right: 0)
-        button.setImage(UIImage(named: "deliveryImage"), for: .normal)
+        button.setImage(UIImage(asset: Asset.Assets.deliveryImage), for: .normal)
         button.layer.cornerRadius = 15
         return button
     }()
@@ -58,7 +61,7 @@ final class DeliveryCell: UITableViewCell {
                                               left: 50,
                                               bottom: 0,
                                               right: 0)
-        button.setImage(UIImage(named: "takeToGoImage"), for: .normal)
+        button.setImage(UIImage(asset: Asset.Assets.takeToGoImage), for: .normal)
         button.layer.cornerRadius = 15
         return button
     }()
@@ -94,9 +97,10 @@ final class DeliveryCell: UITableViewCell {
         return stackView
     }()
     
+    weak var delegate: DeliveryCellDelegate?
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
         setupCell()
     }
     
@@ -106,7 +110,6 @@ final class DeliveryCell: UITableViewCell {
     
     @objc
     private func deliveryButtonTapped() {
-        print(#function)
         pickupButton.backgroundColor = .clear
         pickupButton.tintColor = .specialLightGray
         deliveryButton.backgroundColor = .specialWhite
@@ -115,7 +118,6 @@ final class DeliveryCell: UITableViewCell {
     
     @objc
     private func takeToGoButtonTapped() {
-        print(#function)
         pickupButton.backgroundColor = .specialWhite
         pickupButton.tintColor = .carbon
         deliveryButton.backgroundColor = .clear
@@ -124,7 +126,16 @@ final class DeliveryCell: UITableViewCell {
     
     @objc
     private func changeButtonTapped() {
-        print(#function)
+        print("111")
+        delegate?.didTapChangeButton()
+    }
+}
+
+// MARK: - Delegate
+
+extension DeliveryCell: DeliveryCellDelegate {
+    func didTapChangeButton() {
+        print("333")
     }
 }
 
@@ -133,7 +144,6 @@ final class DeliveryCell: UITableViewCell {
 private extension DeliveryCell {
     func setupCell() {
         backgroundColor = .carbon
-        
         addSubviews()
         setConstraints()
     }
@@ -175,4 +185,8 @@ private extension DeliveryCell {
             bottomStackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -16)
         ])
     }
+}
+
+struct DeliveryCellViewModel {
+    //TODO: -
 }

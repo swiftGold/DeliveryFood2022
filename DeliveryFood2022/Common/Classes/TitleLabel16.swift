@@ -8,7 +8,6 @@
 import UIKit
 
 class TitleLabel16: Label {
-    
     override var textLabelColor: UIColor? {
         return UIColor.specialWhite
     }
