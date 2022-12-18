@@ -1,6 +1,12 @@
 PODS:
   - Alamofire (5.6.2)
   - Core (0.1.0)
+  - GoogleMaps (7.2.0):
+    - GoogleMaps/Maps (= 7.2.0)
+  - GoogleMaps/Base (7.2.0)
+  - GoogleMaps/Maps (7.2.0):
+    - GoogleMaps/Base
+  - Kingfisher (7.4.1)
   - Moya (15.0.0):
     - Moya/Core (= 15.0.0)
   - Moya/Core (15.0.0):
@@ -17,6 +23,8 @@ PODS:
 
 DEPENDENCIES:
   - Core (from `DevPods/Core`)
+  - GoogleMaps
+  - Kingfisher
   - Networking (from `DevPods/Networking`)
   - RealmSwift
   - SwiftGen
@@ -24,6 +32,8 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
+    - GoogleMaps
+    - Kingfisher
     - Moya
     - Realm
     - RealmSwift
@@ -38,12 +48,14 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Alamofire: d368e1ff8a298e6dde360e35a3e68e6c610e7204
   Core: e39f3a89bb561b0f5ed529309e9e3eae7a491303
+  GoogleMaps: 65ce5426e2398bb81433c8076f2ab6419c2c5537
+  Kingfisher: cd762a593a61b2fbecf7645c00f9a801a3ebfc9c
   Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
   Networking: 79113d2cc50c4faf47be3ea1607159d3dcdbabd1
   Realm: eb7f6a7a8395906822e6fab71eb8496d6d52b318
   RealmSwift: 6b54904d4a236de143f3411a757641fd74e9cb3d
   SwiftGen: 1366a7f71aeef49954ca5a63ba4bef6b0f24138c
 
-PODFILE CHECKSUM: 4b775ba0468d888c5a96ef5b6113160940d429b6
+PODFILE CHECKSUM: fdb7d1c29b1acb88477fd9cb4a4cb076d69119da
 
 COCOAPODS: 1.11.3

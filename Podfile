@@ -20,6 +20,9 @@ def common_pods
   use_frameworks!
   pod 'RealmSwift'
   pod 'SwiftGen'
+  pod 'Kingfisher'
+  pod 'GoogleMaps'
+#  pod 'YandexMapsMobile', '4.2.2-lite'
 end
 
 target 'DeliveryFood2022' do

@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let moduleBuilder: ModuleBuilderProtocol = ModuleBuilder()
         
         window.makeKeyAndVisible()
-        window.rootViewController = moduleBuilder.buildCatalogModule()
+        window.rootViewController = moduleBuilder.buildMapModule()
 
         self.window = window
     }

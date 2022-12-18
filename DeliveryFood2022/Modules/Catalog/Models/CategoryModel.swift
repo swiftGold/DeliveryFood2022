@@ -16,4 +16,20 @@ struct CategoryModel {
     let id: Int
     let title: String
     var isSelected: Bool
+    
+    init(
+        id: Int,
+        title: String,
+        isSelected: Bool
+    ) {
+        self.id = id
+        self.title = title
+        self.isSelected = isSelected
+    }
+    
+    init(_ response: CategoryResponseModel) {
+        self.id = response.id
+        self.title = response.title
+        self.isSelected = false
+    }
 }

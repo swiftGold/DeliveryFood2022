@@ -10,10 +10,9 @@ import UIKit
 final class SaleCollectionViewCell: UICollectionViewCell {
     private let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(asset: Asset.Assets.salesBanner)
         imageView.layer.cornerRadius = 20
         imageView.clipsToBounds = true
-        imageView.backgroundColor = .green
+        imageView.backgroundColor = .specialGray
         return imageView
     }()
     
@@ -27,21 +26,16 @@ final class SaleCollectionViewCell: UICollectionViewCell {
     }
     
     func configureCell(with viewModel: SaleCellViewModel) {
-        loadImageFromUrl(imageURL: viewModel.imageUrl, imageView: imageView)
+        imageView.backgroundColor = .clear
+        imageView.loadImage(from: viewModel.imageUrl)
+    }
+    
+    func configurePlaceholderCell() {
+        imageView.backgroundColor = .specialGray
     }
 }
 
 private extension SaleCollectionViewCell {
-    func loadImageFromUrl(imageURL: String, imageView: UIImageView) {
-        if let url = URL(string: imageURL) {
-            do {
-                let data = try Data(contentsOf: url)
-                self.imageView.image = UIImage(data: data)
-            } catch {
-                print("Error = ", error.localizedDescription)}
-        }
-    }
-    
     func setupCell() {
         contentView.myAddSubView(imageView)
         

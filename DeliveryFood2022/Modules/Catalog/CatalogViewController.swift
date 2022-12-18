@@ -11,8 +11,9 @@ import UIKit
 
 protocol CatalogViewControllerProtocol: AnyObject {
     var presenter: CatalogPresenterProtocol? { get set }
-    
+    func showPlaceHolders()
     func updateTableView(_ sectionViewModel: [Catalog.Section])
+    func showError()
 }
 
 class CatalogViewController: UIViewController {
@@ -28,13 +29,16 @@ class CatalogViewController: UIViewController {
         tableView.register(
             SalesTableViewCell.self,
             DeliveryCell.self,
-            CategoriesTableViewCell.self,
             ProductTableViewCell.self
         )
         return tableView
     }()
     
     private var sectionViewModel: [Catalog.Section] = []
+
+//    private var categoriesViewModel: [Categories.Section] = []
+    
+    private let headerView = CategoriesTableHeaderView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,9 +55,27 @@ extension CatalogViewController: DeliveryCellDelegate {
 //MARK: - CatalogViewControllerProtocol Impl
 
 extension CatalogViewController: CatalogViewControllerProtocol {
+    func showPlaceHolders() {
+        sectionViewModel = [
+            .init(type: .salesPlaceHolder, rows: [.salesPlaceHolder])
+        ]
+        tableView.reloadData()
+    }
+    
     func updateTableView(_ sectionViewModel: [Catalog.Section]) {
         self.sectionViewModel = sectionViewModel
         tableView.reloadData()
+    }
+    func showError() {
+
+    }
+}
+
+//MARK: - CategoriesTableHeaderViewDelegate
+
+extension CatalogViewController: CategoriesTableHeaderViewDelegate {
+    func didTapCell(at index: Int) {
+        presenter?.didTapCell(at: index)
     }
 }
 
@@ -85,19 +107,46 @@ extension CatalogViewController: UITableViewDataSource {
         case .delivery(let viewModel):
             let cell = tableView.dequeueReusableCell(withType: DeliveryCell.self, for: indexPath)
             cell.delegate = self
-//            cell.configureCell(with: viewModel, delegate: delegate)
-            return cell
-            
-        case .categories(let viewModel):
-            let cell = tableView.dequeueReusableCell(withType: CategoriesTableViewCell.self, for: indexPath)
-            cell.configureCell(with: viewModel)
+            //            cell.configureCell(with: viewModel, delegate: delegate)
             return cell
             
         case .product(let viewModel):
             let cell = tableView.dequeueReusableCell(withType: ProductTableViewCell.self, for: indexPath)
+
             cell.configureCell(with: viewModel)
+//            cell.configurePlaceholder()
+            return cell
+            
+        case .salesPlaceHolder:
+            let cell = tableView.dequeueReusableCell(withType: SalesTableViewCell.self, for: indexPath)
+            cell.configurePlaceHolder()
             return cell
         }
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        switch sectionViewModel[section].type {
+        case let .products(viewModel):
+
+            headerView.configureHeader(with: viewModel)
+            headerView.delegate = self
+            return headerView
+        case .sales,
+             .delivery,
+             .salesPlaceHolder:
+            return nil
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        switch sectionViewModel[section].type {
+        case .products(_):
+            return 60
+            
+        default:
+            return 0
+        }
+        
     }
 }
 
@@ -108,7 +157,8 @@ private extension CatalogViewController {
         
         addSubviews()
         setConstraint()
-        presenter?.viewDidLoad()
+//        presenter?.viewDidLoad()
+        presenter?.viewDidLoadAsync()
     }
     
     func addSubviews() {

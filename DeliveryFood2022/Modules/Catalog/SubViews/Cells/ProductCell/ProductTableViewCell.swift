@@ -11,9 +11,8 @@ final class ProductTableViewCell: UITableViewCell {
     
     private let productImageView: UIImageView = {
         let imageView = UIImageView()
-        var photoImage = UIImage(asset: Asset.Assets.food)
         imageView.clipsToBounds = true
-        imageView.image = photoImage
+        imageView.layer.cornerRadius = 10
         return imageView
     }()
     
@@ -45,6 +44,8 @@ final class ProductTableViewCell: UITableViewCell {
         return button
     }()
     
+    private var products: [ProductCellViewModel] = []
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupCell()
@@ -64,23 +65,25 @@ extension ProductTableViewCell {
         titleLabel.text = viewModel.title
         descriptionLabel.text = viewModel.description
         costLabel.text = String(viewModel.price)
-        loadImageFromUrl(imageURL: viewModel.imageUrl, imageView: productImageView)
+        productImageView.loadImage(from: viewModel.imageUrl)
+    }
+    
+    func configurePlaceholder() {
+        
+        products = [
+            .init(title: "", description: "", price: "", imageUrl: ""),
+            .init(title: "", description: "", price: "", imageUrl: ""),
+            .init(title: "", description: "", price: "", imageUrl: ""),
+            .init(title: "", description: "", price: "", imageUrl: ""),
+            .init(title: "", description: "", price: "", imageUrl: ""),
+            .init(title: "", description: "", price: "", imageUrl: "")
+        ]
     }
 }
 
 // MARK: - Private methods
 
 private extension ProductTableViewCell {
-    func loadImageFromUrl(imageURL: String, imageView: UIImageView) {
-        if let url = URL(string: imageURL) {
-            do {
-                let data = try Data(contentsOf: url)
-                self.imageView?.image = UIImage(data: data)
-            } catch {
-                print("Error = ", error.localizedDescription)}
-        }
-    }
-
     func setupCell() {
         backgroundColor = .carbon
         selectionStyle = .none
@@ -119,13 +122,13 @@ private extension ProductTableViewCell {
         ])
         
         NSLayoutConstraint.activate([
-            addProductButton.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 16),
+            addProductButton.topAnchor.constraint(greaterThanOrEqualTo: descriptionLabel.bottomAnchor, constant: 16),
             addProductButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
             addProductButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             addProductButton.widthAnchor.constraint(equalToConstant: 32),
             addProductButton.heightAnchor.constraint(equalToConstant: 32)
         ])
-        
+
         NSLayoutConstraint.activate([
             costLabel.leadingAnchor.constraint(equalTo: productImageView.trailingAnchor, constant: 16),
             costLabel.centerYAnchor.constraint(equalTo: addProductButton.centerYAnchor)

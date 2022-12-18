@@ -1,13 +1,17 @@
 //
-//  CategoriesTableViewCell.swift
+//  CategoriesTableHeaderView.swift
 //  DeliveryFood2022
 //
 //  Created by Сергей Золотухин on 15.09.2022.
 //
 
 import UIKit
+
+protocol CategoriesTableHeaderViewDelegate: AnyObject {
+    func didTapCell(at index: Int)
+}
  
-final class CategoriesTableViewCell: UITableViewCell {
+final class CategoriesTableHeaderView: UITableViewHeaderFooterView {
     
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -18,7 +22,7 @@ final class CategoriesTableViewCell: UITableViewCell {
         layout.scrollDirection = .horizontal
         layout.sectionInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
         collectionView.contentInsetAdjustmentBehavior = .always
-        collectionView.backgroundColor = .clear
+        collectionView.backgroundColor = .carbon
         collectionView.bounces = false
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: "CategoryCollectionViewCell")
@@ -26,9 +30,11 @@ final class CategoriesTableViewCell: UITableViewCell {
     }()
     
     private var categories: [CategoryCellViewModel] = []
-            
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    private var categoriesHeaderViewModel: CategoriesHeaderViewModel?
+    weak var delegate: CategoriesTableHeaderViewDelegate?
+
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
         setupCell()
     }
     
@@ -36,15 +42,19 @@ final class CategoriesTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureCell(with viewModel: CategoriesCellViewModel) {
+    func configureHeader(with viewModel: CategoriesHeaderViewModel) {
         categories = viewModel.categories
+        collectionView.reloadData()
+    }
+    
+    func configurePlaceHolder() {
         collectionView.reloadData()
     }
 }
 
 // MARK: - UICollectionViewDataSource Impl
 
-extension CategoriesTableViewCell: UICollectionViewDataSource {
+extension CategoriesTableHeaderView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return categories.count
     }
@@ -59,14 +69,16 @@ extension CategoriesTableViewCell: UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDelegate Impl
 
-extension CategoriesTableViewCell: UICollectionViewDelegate {
+extension CategoriesTableHeaderView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("\(indexPath.item)")
+        delegate?.didTapCell(at: indexPath.item)
     }
 }
 
 // MARK: - Private methods
 
-private extension CategoriesTableViewCell {
+private extension CategoriesTableHeaderView {
     func setupCell() {
         backgroundColor = .clear
         addSubviews()

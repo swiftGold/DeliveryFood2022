@@ -10,6 +10,7 @@ import Core
 
 protocol ModuleBuilderProtocol {
     func buildCatalogModule() -> CatalogViewController
+    func buildMapModule() -> MapViewController
 }
 
 final class ModuleBuilder {
@@ -30,6 +31,17 @@ extension ModuleBuilder: ModuleBuilderProtocol {
         
         let viewController = CatalogViewController()
         let presenter = CatalogPresenter(apiService: apiservice)
+        
+        viewController.presenter = presenter
+        presenter.viewController = viewController
+        
+        return viewController
+    }
+    
+    func buildMapModule() -> MapViewController {
+        
+        let viewController = MapViewController()
+        let presenter = MapPresenter()
         
         viewController.presenter = presenter
         presenter.viewController = viewController

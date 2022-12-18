@@ -16,7 +16,7 @@ class CategoryCollectionViewCell: UICollectionViewCell {
         label.clipsToBounds = true
         return label
     }()
-    
+            
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupCell()
@@ -30,6 +30,10 @@ class CategoryCollectionViewCell: UICollectionViewCell {
         titleLabel.text = viewModel.title
         titleLabel.textColor = viewModel.isSelected ? .specialBlack : .specialWhite
         titleLabel.backgroundColor = viewModel.isSelected ? .signalYellow : .clear
+    }
+    
+    func configurePlaceholderCell() {
+        titleLabel.backgroundColor = .specialGray
     }
 }
 

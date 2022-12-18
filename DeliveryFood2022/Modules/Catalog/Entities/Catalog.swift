@@ -14,14 +14,18 @@ enum Catalog {
     enum SectionType {
         case sales
         case delivery
-        case categories
-        case products
+        case products(CategoriesHeaderViewModel)
+
+        case salesPlaceHolder
+//        case productPlaceholder
     }
 
     enum Row {
         case sales(viewModel: SalesCellViewModel)
         case delivery(viewModel: DeliveryCellViewModel)
-        case categories(viewModel: CategoriesCellViewModel)
         case product(viewModel: ProductCellViewModel)
+        
+        case salesPlaceHolder
+//        case productPlaceholder
     }
 }

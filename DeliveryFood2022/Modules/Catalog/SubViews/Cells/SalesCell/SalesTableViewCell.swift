@@ -26,6 +26,7 @@ final class SalesTableViewCell: UITableViewCell {
     }()
     
     private var sales: [SaleCellViewModel] = []
+    private var isPlaceholder = false
             
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -33,7 +34,13 @@ final class SalesTableViewCell: UITableViewCell {
     }
     
     func configureCell(with viewModel: SalesCellViewModel) {
+        isPlaceholder = false
         sales = viewModel.sales
+        collectionView.reloadData()
+    }
+    
+    func configurePlaceHolder() {
+        isPlaceholder = true
         collectionView.reloadData()
     }
     
@@ -46,14 +53,19 @@ final class SalesTableViewCell: UITableViewCell {
 
 extension SalesTableViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return sales.count
+//        return sales.count
+        return isPlaceholder ? 3 : sales.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SalesImageCell", for: indexPath) as? SaleCollectionViewCell else { fatalError("")
         }
-        let viewModel = sales[indexPath.item]
-        cell.configureCell(with: viewModel)
+        if isPlaceholder {
+            cell.configurePlaceholderCell()
+        } else {
+            let viewModel = sales[indexPath.item]
+            cell.configureCell(with: viewModel)
+        }
         return cell
     }
 }
